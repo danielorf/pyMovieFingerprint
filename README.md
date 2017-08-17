@@ -1,4 +1,4 @@
-# moviefingerprint
+# pyMovieFingerprint
 
 moviefingerprint analyzes a video stream and returns an image that represents the movie's 'fingerprint'.  The resulting image shows the primary ambient color (if it exists) as well as some repeating patterns throughout the movie.
 
