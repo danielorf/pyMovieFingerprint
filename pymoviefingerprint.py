@@ -159,7 +159,7 @@ class MovieFingerprint(object):
 
     def write_matching_image(self):
         '''
-        
+
         :return:
         '''
         if self.best_match_image is not None:
@@ -167,3 +167,24 @@ class MovieFingerprint(object):
             print('Matching image written to images\{}_{}.jpg'.format('MatchImage', self.movie_title))
         else:
             print('Error writing Match Image, make sure to get it first with get_matching_image()')
+
+    def write_combined_image(self):
+        '''
+
+        :return:
+        '''
+        if self.final_image is not None and self.best_match_image is not None:
+            scaled_image_width = 500
+            scaled_image_height = int(scaled_image_width*float(self.output_image_height)/self.image_width)
+            print(self.image_width)
+            print(self.output_image_height)
+            print(scaled_image_width)
+            print(scaled_image_height)
+            scaled_final_image = cv2.resize(self.final_image, (scaled_image_width, scaled_image_height),
+                                              interpolation=cv2.INTER_CUBIC)
+            scaled_best_match_image = cv2.resize(self.best_match_image, (scaled_image_width, scaled_image_height),
+                                            interpolation=cv2.INTER_CUBIC)
+            cv2.imwrite("images\{}_{}.jpg".format('Both', self.movie_title),
+                        np.concatenate((scaled_final_image, scaled_best_match_image), axis=1))  # save side-by-side image as JPEG file
+        else:
+            print('Error writing Side-by-Side Image, make sure to get both images first with make_fingerprint() and get_matching_image()')
