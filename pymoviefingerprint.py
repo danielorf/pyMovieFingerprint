@@ -149,6 +149,7 @@ class MovieFingerprint(object):
 
                 if temp_image_score < best_match_image_score:
                     best_match_image_score = temp_image_score
+                    best_match_image = temp_image
                 frame_count += 1
             else:
                 frame_count += 1
@@ -184,7 +185,9 @@ class MovieFingerprint(object):
                                               interpolation=cv2.INTER_CUBIC)
             scaled_best_match_image = cv2.resize(self.best_match_image, (scaled_image_width, scaled_image_height),
                                             interpolation=cv2.INTER_CUBIC)
+            middle_black_bar = np.zeros((scaled_final_image.shape[0],10, scaled_final_image.shape[2]))
+
             cv2.imwrite("images\{}_{}.jpg".format('Both', self.movie_title),
-                        np.concatenate((scaled_final_image, scaled_best_match_image), axis=1))  # save side-by-side image as JPEG file
+                        np.concatenate((scaled_final_image, middle_black_bar, scaled_best_match_image), axis=1))  # save side-by-side image as JPEG file
         else:
             print('Error writing Side-by-Side Image, make sure to get both images first with make_fingerprint() and get_matching_image()')
