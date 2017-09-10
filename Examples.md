@@ -1,4 +1,4 @@
-Each averaged image is produced by sampling frames from a video and applying a some OpenCV image processing operations.  Those operations are described below:
+Each averaged image is produced by sampling frames from a video and applying some OpenCV image processing operations.  Those operations are described below:
 
 - The video is sampled at a rate specified by the 'total_samples' value of the MovieFingerprint object (default is 250 per video).  OpenCV unfortunately forces you to read in each frame sequentially which is the largset bottleneck by far.
 - If a frame is selected for sampling, it is then converted from BGR (OpenCV default color space, just reordered RGB) to HSV (aka HSI).  
