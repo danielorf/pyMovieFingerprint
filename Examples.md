@@ -5,7 +5,11 @@ moviefingerprint analyzes a video stream and returns an image that represents th
 Each fingerprint image is produced by sampling frames from a video and applying some OpenCV image processing operations.  Those operations are described below:
 
 - The video is sampled at a rate specified by the 'total_samples' value of the MovieFingerprint object (default is 250 per video).  OpenCV unfortunately forces you to read in each frame sequentially which is the largset bottleneck by far.
-- If a frame is selected for sampling, it is then converted from BGR (OpenCV default color space, just reordered RGB) to HSV (aka HSI).  
+- If a frame is selected for sampling, it is then converted from BGR (OpenCV default color space, simply reordered RGB) to HSV (aka HSI).  BGR/RGB is a poor image format to perform most image arithmetic - it's much more convenient to work with HSV/HSI or YCrCb.  
+
+
+- --------S and V channels histogram-equalized (lines 75, 76).  Converted back to BGR (77).  Gaussian blurred with 5X5 kernel (78). Added to resulting image (81).
+
 
 - It also became clear early on the Histogram Equalization of each frame was required to prevent dark and bright spots from overwhelming the image.  The exact implementation was not as obvious.
 - Image is normalized by converting each integer pixel value (all 3 channels) to float and then dividing by the total number of sampled frames (lines 60 and 81).  Without the normalization step, the pixel values would 'wrap' back to 0 when exceeding 2^8.
