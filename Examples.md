@@ -11,11 +11,11 @@ Each fingerprint image is produced by sampling frames from a video and applying 
 - If a frame is selected for sampling, it is then converted from BGR color space (reordered RGB, OpenCV default) to HSV (aka HSI).  BGR/RGB is a poor image format to perform most image arithmetic - it's much more convenient to work with HSV/HSI or YCrCb.  
 - After lots of experimentation, it was determined that the best method to preserve the color and intensity of a movie is to normalize the image, Histogram Equalize the S and V channels, liberal application of Gaussian Blur
     - Equalize the image by converting pixels to float values, divide by number of sample, convert back to 8 bit integer pixel values at the end.  Failure to do so will result in the pixel values wrapping back to 0 after surpassing 255 - lots of hot and dark spots all over the image
-    - Histogram Equalize the S and V image channels.  Without this step, the image tends to trend toward and ugly brown/grey.
+    - Histogram Equalize the S and V image channels.  Without this step, the image tends to trend toward and ugly brown/grey.  The H channel is skipped here because equalizing it results in unnaturally colorful blocky pixels - Also note that H and S channels are low resolution in compressed video but S tends to handle eualization more seemlessly. 
     - Gausiann blur helps blend the any edges in the image; better match for the abstract coloring
 
-
-
+<br>
+Let's take a look at what Histogram Equalization does to each channel (converted individually to greyscale):
 >
 ```python
 hsv_image = cv2.cvtColor(bgr_image, cv2.COLOR_BGR2HSV)  # Convert BGR image to HSV
