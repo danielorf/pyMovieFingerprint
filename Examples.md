@@ -1,22 +1,19 @@
 # pyMovieFingerprint
 
-moviefingerprint analyzes a video stream and returns an image that represents the movie's 'fingerprint'.  This fingerprint image is a unique type of image averaging that maintains the most common ambient colors and image patterns.
+pyMovieFingerprint analyzes a video stream and returns an image that represents the movie's 'fingerprint'.  This fingerprint image is a unique type of image averaging that maintains the most common ambient colors and image patterns.  
 
+Below on the left is a moviefingerprint image from the movie [Moon](http://www.imdb.com/title/tt1182345/) and on the right is a scene from the same movie with similar image qualities.
 <img src=images/Both_Moon.jpg width="1000">
 
 Each fingerprint image is produced by sampling frames from a video and applying some OpenCV image processing operations.  Those operations are described below:
 
 - The video is sampled at a rate specified by the 'total_samples' value of the MovieFingerprint object (default is 250 per video).  OpenCV unfortunately forces you to read in each frame sequentially which is the largset bottleneck by far.
-- If a frame is selected for sampling, it is then converted from BGR (OpenCV default color space, simply reordered RGB) to HSV (aka HSI).  BGR/RGB is a poor image format to perform most image arithmetic - it's much more convenient to work with HSV/HSI or YCrCb.  
+- If a frame is selected for sampling, it is then converted from BGR color space (reordered RGB, OpenCV default) to HSV (aka HSI).  BGR/RGB is a poor image format to perform most image arithmetic - it's much more convenient to work with HSV/HSI or YCrCb.  
+- After lots of experimentation, it was determined that the best method to preserve the color and intensity of a movie is to normalize the image, Histogram Equalize the S and V channels, liberal application of Gaussian Blur
+    - Equalize the image by converting pixels to float values, divide by number of sample, convert back to 8 bit integer pixel values at the end.  Failure to do so will result in the pixel values wrapping back to 0 after surpassing 255 - lots of hot and dark spots all over the image
+    - Histogram Equalize the S and V image channels.  Without this step, the image tends to trend toward and ugly brown/grey.
+    - Gausiann blur helps blend the any edges in the image; better match for the abstract coloring
 
-
-- --------S and V channels histogram-equalized (lines 75, 76).  Converted back to BGR (77).  Gaussian blurred with 5X5 kernel (78). Added to resulting image (81).
-
-
-- It also became clear early on the Histogram Equalization of each frame was required to prevent dark and bright spots from overwhelming the image.  The exact implementation was not as obvious.
-- Image is normalized by converting each integer pixel value (all 3 channels) to float and then dividing by the total number of sampled frames (lines 60 and 81).  Without the normalization step, the pixel values would 'wrap' back to 0 when exceeding 2^8.
-- Each sampled frame's color space is converted from BGR (reordered RGB) to HSV (line 74) - BGR/RGB is a poor image format to perform most image arithmetic.  It's much more convenient to work with HSV/HSI or YCrCb.  S and V channels histogram-equalized (lines 75, 76).  Converted back to BGR (77).  Gaussian blurred with 5X5 kernel (78). Added to resulting image (81).
-- Once the entire movie has been sampled, the final image meets another 5X5 gaussian blur kernel (87) and is converted back to 8bit representation so it can be viewed.
 
 
 >
