@@ -2,7 +2,7 @@
 
 moviefingerprint analyzes a video stream and returns an image that represents the movie's 'fingerprint'.  This fingerprint image is a unique type of image averaging that maintains the most common ambient colors and image patterns.
 
-![Moon](https://gitlab.com/danielorf/pyMovieFingerprint/raw/master/images/Both_Moon.jpg)
+![Moon](https://gitlab.com/danielorf/pyMovieFingerprint/raw/master/images/Both_Moon.jpg "Moon")
 
 Each fingerprint image is produced by sampling frames from a video and applying some OpenCV image processing operations.  Those operations are described below:
 
