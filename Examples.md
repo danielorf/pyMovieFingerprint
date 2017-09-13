@@ -2,7 +2,7 @@
 
 pyMovieFingerprint analyzes a video stream and returns an image that represents the movie's 'fingerprint'.  This fingerprint image is a unique type of image averaging that maintains the most common ambient colors and scene patterns.  
 
-Below on the left is a moviefingerprint image from the movie [Moon](http://www.imdb.com/title/tt1182345/) and on the right is a scene from the same movie with similar image qualities.
+Below on the left is a moviefingerprint image from the movie [Moon](http://www.imdb.com/title/tt1182345/) and on the right is the scene from Moon with the most similar image qualities to its moviefingerprint image.
 <img src=images/Both_Moon.jpg width="1000">
 
 Each fingerprint image is produced by sampling frames from a video and applying some OpenCV image processing operations.  Those operations are described below:
@@ -10,9 +10,13 @@ Each fingerprint image is produced by sampling frames from a video and applying 
 - The video is sampled at a rate specified by the 'total_samples' value of the MovieFingerprint object (default is 250 per video).  OpenCV unfortunately forces you to read in each frame sequentially which is the largset bottleneck by far.
 - If a frame is selected for sampling, it is then converted from BGR color space (reordered RGB, OpenCV default) to HSV (aka HSI).  BGR/RGB is a poor image format to perform most image arithmetic - it's much more convenient to work with HSV/HSI or YCrCb.  
 - After lots of experimentation, it was determined that the best method to preserve the color and intensity of a movie is to normalize the image, Histogram Equalize the S and V channels, and liberal application of Gaussian Blur
-    - **Equalize** the image by converting pixels to float values, divide by number of sample, convert back to 8 bit integer pixel values at the end.  Failure to do so will result in the pixel values wrapping back to 0 after surpassing 255 - lots of hot and dark spots all over the image
-    - **Histogram** Equalize the S and V image channels.  Without this step, the image tends to trend toward and ugly brown/grey.  The H channel is skipped here because equalizing it results in unnaturally colorful blocky pixels - Also note that H and S channels are low resolution in compressed video but S tends to handle eualization more seemlessly. 
-    - **Gaussian**  blur helps blend the any edges in the image; better match for the abstract coloring
+    - **Normalize** the image by converting pixels to float values, divide by number of sample, convert back to 8 bit integer pixel values at the end.  Failure to do so will result in the pixel values wrapping back to 0 after surpassing 255 - lots of hot and dark spots all over the image
+    - **Histogram Equalize** the S and V image channels.  Without this step, the image tends to trend toward and ugly brown/grey.  The H channel is skipped here because normalizing it results in unnaturally colorful blocky pixels - Also note that H and S channels are low resolution in compressed video but S tends to handle histogram equalization more seemlessly. 
+    - **Gaussian  blur** helps blend the any edges in the image; better match for the abstract coloring
+
+<br>
+Normalizing and Gaussian Blur are fairly obvious choices - Histogram Equalization to only the S and V channels was not as obvious.  It took some experimentation to come to this conclusion.  Here are a few comparisons from Moon and Idiocracy:
+
 
 <br>
 Let's take a look at what Histogram Equalization does to each channel (converted individually to greyscale):
