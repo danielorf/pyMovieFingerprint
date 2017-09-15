@@ -4,6 +4,11 @@ pyMovieFingerprint analyzes a video stream and returns an image that represents 
 
 Below on the left is a moviefingerprint image from the movie [Moon](http://www.imdb.com/title/tt1182345/) and on the right is the scene from Moon with the most similar image qualities to its moviefingerprint image.
 <img src=images/Both_Moon.jpg width="1000">
+[Lawrence of Arabia](http://www.imdb.com/title/tt0056172/):
+<img src=images/Both_Lawrence%20of%20Arabia.jpg width="1000">
+[Twin Peaks: Fire Walk with Me](http://www.imdb.com/title/tt0105665/):
+<img src=images/Both_Twin%20Peaks%20Fire%20Walk%20with%20Me.jpg width="1000">
+
 
 Each fingerprint image is produced by sampling frames from a video and applying some OpenCV image processing operations.  Those operations are described below:
 
