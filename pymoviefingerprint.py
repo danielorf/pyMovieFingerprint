@@ -42,12 +42,21 @@ class MovieFingerprint(object):
         '''
         self.movie_title = movie_title
 
-    def make_fingerprint(self):
+    def make_fingerprint(self, hist_eq=None):
         '''
 
         :return:
         '''
+
         if (self.movie_path or self.movie_title) is not None:
+
+            if hist_eq == None:
+                self.movie_title = self.movie_title + '_noHEQ'
+            elif hist_eq == 'HSV':
+                self.movie_title = self.movie_title + '_HSV'
+            elif hist_eq == 'SV':
+                self.movie_title = self.movie_title + '_SV'
+
             print(self.movie_title)
             print('Total frames: ', self.total_frames)
             print('Frames to capture: ', self.fraction_of_movie_to_capture * self.total_frames)
@@ -72,8 +81,22 @@ class MovieFingerprint(object):
                     print('frame_count: ', frame_count)
 
                     temp_image_rescaled = cv2.cvtColor(temp_image_rescaled, cv2.COLOR_BGR2HSV)
-                    temp_image_rescaled[:, :, 1] = cv2.equalizeHist(temp_image_rescaled[:, :, 1])
-                    temp_image_rescaled[:, :, 2] = cv2.equalizeHist(temp_image_rescaled[:, :, 2])
+
+                    if hist_eq != None:
+                        # self.movie_title = self.movie_title + '_noHEQ'
+                        if hist_eq == 'HSV':
+                            # self.movie_title = self.movie_title + '_HSV'
+                            temp_image_rescaled[:, :, 0] = cv2.equalizeHist(temp_image_rescaled[:, :, 0])
+                            temp_image_rescaled[:, :, 1] = cv2.equalizeHist(temp_image_rescaled[:, :, 1])
+                            temp_image_rescaled[:, :, 2] = cv2.equalizeHist(temp_image_rescaled[:, :, 2])
+                        elif hist_eq == 'SV':
+                            # self.movie_title = self.movie_title + '_SV'
+                            # temp_image_rescaled[:, :, 0] = cv2.equalizeHist(temp_image_rescaled[:, :, 0])
+                            temp_image_rescaled[:, :, 1] = cv2.equalizeHist(temp_image_rescaled[:, :, 1])
+                            temp_image_rescaled[:, :, 2] = cv2.equalizeHist(temp_image_rescaled[:, :, 2])
+                        else:
+                            print('Invalid hist_EQ param; must be "SV", "HSV" or None')
+
                     temp_image_rescaled = cv2.cvtColor(temp_image_rescaled, cv2.COLOR_HSV2BGR)
                     temp_image_rescaled = cv2.GaussianBlur(temp_image_rescaled, (5, 5), 0)
                     temp_image_rescaled = cv2.resize(temp_image_rescaled, (self.image_width, self.output_image_height),
@@ -139,7 +162,7 @@ class MovieFingerprint(object):
                 # temp_image_small_HSV = cv2.cvtColor(temp_image_small, cv2.COLOR_BGR2HSV)  # Convert to HSV color space
                 temp_image_small_YCrCb = cv2.cvtColor(temp_image_small, cv2.COLOR_BGR2YCrCb)  # Convert to YCrCb color space 
 
-                # Scoring function is modified RMS of difference between Y/Cr/Cb colr channels of the averaged image found
+                # Scoring function is modified RMS of difference between Y/Cr/Cb color channels of the averaged image found
                 # with makeFingerprint() and each frame gathered by the video.read() call at the top of this method
                 temp_image_score = math.sqrt(np.sum(
                     0.5 * np.square((final_image_small_YCrCb[:, :, 0] - temp_image_small_YCrCb[:, :, 0]))
