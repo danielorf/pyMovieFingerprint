@@ -34,6 +34,13 @@ Normalizing and Gaussian Blur are fairly obvious choices - Histogram Equalizatio
 <img src=images/HistEqComparison.PNG width="1000">
 
 <br>
+Note that the averaged images with no histogram equalization tend to be rather dark.  This is likely due to the momentary black transition images present in most movies - the makefingerprint function purposely skips the last 10% of all movies due to most credits occuring on a black background over-darkening the fingerprint image.
+
+Another interesting phenomenon is that histogram equalization on all color channels (H,S,V) results is inaccurate background color.  Looking at the color wheel below, you can see that the Saturation and Valie/Intensity are gradients that can be thought of as a scale from 0-1.  Hue, on the other hand, is a gradient through the color spectrum starting and ending arbitrarily at Red.  Equalizing the hue just results in rescaling the color of each pixel across the color spectrum - this causes the colors to shift which is not desired here.  
+<p align="center"><img src=https://upload.wikimedia.org/wikipedia/commons/thumb/0/0d/HSV_color_solid_cylinder_alpha_lowgamma.png/1280px-HSV_color_solid_cylinder_alpha_lowgamma.png width="500" align="middle"></p>
+<img src=images/Moon_HistEQ_Channel_Comparison.PNG width="1000">
+
+<br>
 Let's take a look at what Histogram Equalization does to each channel (converted individually to greyscale):
 >
 ```python
