@@ -1,8 +1,8 @@
 # pyMovieFingerprint
 
-moviefingerprint analyzes a video stream and returns an image that represents the movie's 'fingerprint'.  This fingerprint image is a unique type of image averaging that maintains the most common ambient colors and image patterns.
+moviefingerprint analyzes a video stream and returns an image that represents the movie's 'fingerprint'.  This fingerprint image is a unique type of image averaging that maintains the most common ambient colors and image patterns.  
 
-More specifically, this program uses OpenCV v3.2 to sample a movie at regular intervals and return an 'averaged' image of all the recorded samples.  Additionally, each sample must be transformed from RGB color space to HSI to equalize the Saturation and Intensity channels before being transformed back into RGB and then normalized and averaged.  Normalization prevents the pixel values from wrapping back around to 0 after exceeding the maximum 8 bit value of 255.  Conversion to HSI and histogram equalization prevents the browning and oversaturization of the image that would occur otherwise.
+Detailed description and examples [here](https://github.com/danielorf/pyMovieFingerprint/blob/master/Examples.md)
 
 
 ## Prerequisites
