@@ -5,18 +5,19 @@ pyMovieFingerprint analyzes a video stream and returns an image that represents 
 Below on the left is a moviefingerprint image from the movie Lawrence of Arabia and on the right is the scene from Lawrence of Arabia with the most similar image qualities to its moviefingerprint image.
 
 
-[Lawrence of Arabia](http://www.imdb.com/title/tt0056172/):  
+[Lawrence of Arabia](http://www.imdb.com/title/tt0056172/) ----- [full-sized fingerprint image](https://raw.githubusercontent.com/danielorf/pyMovieFingerprint/master/images/Lawrence%20of%20Arabia.jpg):  
 <img src=images/Both_Lawrence%20of%20Arabia.jpg width="1000">
 
 <br>
-Here's a few more examples with the same format:  
-[Arrival](http://www.imdb.com/title/tt2543164/):  
+Here's a few more examples with the same format: 
+
+[Arrival](http://www.imdb.com/title/tt2543164/) ----- [fingerprint image](https://raw.githubusercontent.com/danielorf/pyMovieFingerprint/master/images/Arrival.jpg):  
 <img src=images/Both_Arrival.jpg width="1000">
 
-[Twin Peaks: Fire Walk with Me](http://www.imdb.com/title/tt0105665/):  
+[Twin Peaks: Fire Walk with Me](http://www.imdb.com/title/tt0105665/) ----- [fingerprint image](https://raw.githubusercontent.com/danielorf/pyMovieFingerprint/master/images/Twin%20Peaks%20-%20Fire%20Walk%20With%20Me.jpg):  
 <img src=images/Both_Twin%20Peaks%20Fire%20Walk%20with%20Me.jpg width="1000">
 
-[Moon](http://www.imdb.com/title/tt1182345/):  
+[Moon](http://www.imdb.com/title/tt1182345/) ----- [fingerprint image](https://raw.githubusercontent.com/danielorf/pyMovieFingerprint/master/images/Moon.jpg):  
 <img src=images/Both_Moon.jpg width="1000">
 <br>
 
