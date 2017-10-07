@@ -56,7 +56,8 @@ Channel breakdown with and without Histogram Equalization on each channel:
 <img src=images/HistEQ_Channel_Comparison.PNG width="1000">
 
 <br>
-#Match Image
+
+# Match Image
 
 Finding the closest matching frame from a movie to its moviefingerprint also took some trial and error.  My first instinct was to compare movie frames to the moviefingerprint image by minimizing RMS difference between images.  Again, HSV or YCrCb are ideal for this type of work.  The RMS method with YCrCb color space carried through, but I had to modify it a little.  If I put equal weight on the intensity channel as the color channel, intensity would overwhelm the result often picking out dark images.  The final result involved cutting the weight of the intensity difference in half:
 >
